@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ScamShield AI</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            text-align: center;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #1e3a8a;
+        }
+
+        textarea {
+            width: 80%;
+            height: 150px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 15px;
+            cursor: pointer;
+            border-radius: 6px;
+            border: none;
+            background-color: #1e3a8a;
+            color: white;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .explanation {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>ðŸ›¡ ScamShield AI</h1>
+    <p>Paste suspicious message below:</p>
+
+    <textarea id="message"></textarea><br>
+    <button onclick="analyzeMessage()">Analyze Message</button>
+
+    <div class="result" id="result"></div>
+    <div class="explanation" id="explanation"></div>
+
+<script>
+
+function analyzeMessage() {
+
+    let text = document.getElementById("message").value.toLowerCase();
+    let score = 0;
+    let reasons = [];
+
+    let scamKeywords = [
+        "urgent", "act now", "limited time",
+        "otp", "verify account", "bank",
+        "lottery", "winner", "prize",
+        "click here", "investment",
+        "guaranteed return", "free money"
+    ];
+
+    scamKeywords.forEach(word => {
+        if (text.includes(word)) {
+            score += 10;
+            reasons.push("Contains suspicious word: " + word);
+        }
+    });
+
+    if (text.includes("http")) {
+        score += 15;
+        reasons.push("Contains external link");
+    }
+
+    let resultText = "";
+    let explanationText = "";
+
+    if (score >= 50) {
+        resultText = "ðŸ”´ High Scam Probability (" + score + "%)";
+    } 
+    else if (score >= 20) {
+        resultText = "ðŸŸ¡ Medium Risk (" + score + "%)";
+    } 
+    else {
+        resultText = "ðŸŸ¢ Likely Safe (" + score + "%)";
+    }
+
+    explanationText = reasons.join("<br>");
+
+    document.getElementById("result").innerHTML = resultText;
+    document.getElementById("explanation").innerHTML = explanationText;
+
+}
+
+</script>
+
+</body>
+</html>
